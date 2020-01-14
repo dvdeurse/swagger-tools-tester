@@ -1,0 +1,45 @@
+openapi: "3.0.1"
+info:
+  version: 1.0.0
+  title: swagger-tools-tester
+
+paths:
+  /echo/pets:
+    post:
+      tags:
+        - echo
+      operationId: echoPets
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Pet'
+        required: true
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+
+components:
+  schemas:
+
+    Pet:
+      type: object
+      discriminator:
+        propertyName: "@type"
+      properties:
+        name:
+          type: string
+
+    Dog:
+      allOf:
+        - $ref: '#/components/schemas/Pet'
+
+    Cat:
+      allOf:
+        - $ref: '#/components/schemas/Pet'

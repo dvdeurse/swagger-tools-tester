@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>tester</groupId>
+    <artifactId>swagger-tools-tester</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.1.4.RELEASE</version>
+    </parent>
+
+    <properties>
+        <java.version>11</java.version>
+        <start-class>tester.server.ServerApplication</start-class>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!--  Test  -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>swagger-tools-tester</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>com.github.agliznetsov.swagger-tools</groupId>
+                <artifactId>swagger-tools-maven-plugin</artifactId>
+                <version>0.5.4</version>
+                <executions>
+                    <execution>
+                        <id>api</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <options>
+                                <source.location>${project.basedir}/api/api.yaml</source.location>
+
+                                <target.model.location>${project.build.directory}/generated-sources/swagger</target.model.location>
+                                <target.model.model-package>tester.server.payload</target.model.model-package>
+                                <target.model.lombok>true</target.model.lombok>
+                                <target.model.lombok-unique-builder>true</target.model.lombok-unique-builder>
+                                <target.model.lombok-super-builder>true</target.model.lombok-super-builder>
+                                <target.model.validation>true</target.model.validation>
+
+                                <target.server.location>${project.build.directory}/generated-sources/swagger</target.server.location>
+                                <target.server.model-package>tester.server.payload</target.server.model-package>
+                                <target.server.api-package>tester.server.api</target.server.api-package>
+                                <target.server.validation>true</target.server.validation>
+                                <target.server.reactive>true</target.server.reactive>
+                            </options>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>webclient-test</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <options>
+                                <source.location>${project.basedir}/api/api.yaml</source.location>
+
+                                <target.model.location>${project.build.directory}/generated-sources/swagger</target.model.location>
+                                <target.model.model-package>tester.server.payload</target.model.model-package>
+                                <target.model.lombok>true</target.model.lombok>
+                                <target.model.lombok-unique-builder>true</target.model.lombok-unique-builder>
+                                <target.model.lombok-super-builder>true</target.model.lombok-super-builder>
+                                <target.model.validation>true</target.model.validation>
+
+                                <target.client.location>${project.build.directory}/generated-sources/swagger</target.client.location>
+                                <target.client.model-package>tester.server.payload</target.client.model-package>
+                                <target.client.client-package>tester.clients.webclient.client</target.client.client-package>
+                                <target.client.dialect>WebClient</target.client.dialect>
+                                <target.client.factory-name>WebClientTestApi</target.client.factory-name>
+                            </options>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>resttemplate-test</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <options>
+                                <source.location>${project.basedir}/api/api.yaml</source.location>
+
+                                <target.model.location>${project.build.directory}/generated-sources/swagger</target.model.location>
+                                <target.model.model-package>tester.server.payload</target.model.model-package>
+                                <target.model.lombok>true</target.model.lombok>
+                                <target.model.lombok-unique-builder>true</target.model.lombok-unique-builder>
+                                <target.model.lombok-super-builder>true</target.model.lombok-super-builder>
+                                <target.model.validation>true</target.model.validation>
+
+                                <target.client.location>${project.build.directory}/generated-sources/swagger</target.client.location>
+                                <target.client.model-package>tester.server.payload</target.client.model-package>
+                                <target.client.client-package>tester.clients.resttemplate.client</target.client.client-package>
+                                <target.client.dialect>RestTemplate</target.client.dialect>
+                                <target.client.factory-name>RestTemplateTestApi</target.client.factory-name>
+                            </options>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
